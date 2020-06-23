@@ -1,0 +1,29 @@
+{
+  "name": "NodeSpeedtest",
+  "version": "1.0.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": "",
+  "license": "",
+  "private": false,
+  "dependencies": {
+    "express": "^4.16.3",
+    "cors": "^2.8.5",
+    "gps-distance": "^0.0.4",
+    "random-bytes": "^1.0.0",
+    "request": "^2.85.0"
+  },
+  "engines": {
+    "node": "12.18.0"
+  },
+  "pkg": {
+    "assets": [
+      "src/public/**/*"
+    ]
+  },
+  "bin": "index.js"
+}
