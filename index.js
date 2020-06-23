@@ -73,4 +73,4 @@ Server.get('/getIP', function (req, res) {
 
 Server.use(express.static(path.join(__dirname, 'public')));
 
-Server.listen(18060, () => console.info('Listening on port 18060'))
+Server.listen(3000, () => console.info('Listening on port 3000'))
