@@ -5,7 +5,7 @@ const path = require('path');
 const request = require('request');
 const helpers = require('./src/Helpers');
 const cors = require('cors');
-const port = process.env.PORT || 8000;
+
 
 let cache;
 
@@ -74,6 +74,7 @@ Server.get('/getIP', function (req, res) {
 
 Server.use(express.static(path.join(__dirname, 'public')));
 
-server.listen(port, () => {
-    console.log("App is running on port " + port);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
 });
