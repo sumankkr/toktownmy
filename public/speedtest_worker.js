@@ -37,7 +37,7 @@ function twarn(s) {
 
 // test settings. can be overridden by sending specific values with the start command
 var settings = {
-	mpot: true, //set to true when in MPOT mode
+	mpot: false, //set to true when in MPOT mode
 	test_order: "D_U_IP", //order in which tests will be performed as a string. D=Download, U=Upload, P=Ping+Jitter, I=IP, _=1 second delay
 	time_ul_max: 15, // max duration of upload test in seconds
 	time_dl_max: 15, // max duration of download test in seconds
@@ -140,7 +140,7 @@ this.addEventListener("message", function(e) {
 				if (/Chrome.(\d+)/i.test(ua) && !!self.fetch) {
 					if (typeof s.xhr_dlMultistream === "undefined") {
 						// chrome more precise with 5 streams
-						settings.xhr_dlMultistream = 5;
+						settings.xhr_dlMultistream = 10;
 					}
 				}
 			}
@@ -155,7 +155,7 @@ this.addEventListener("message", function(e) {
 			if (/Chrome.(\d+)/i.test(ua) && /Android|iPhone|iPad|iPod|Windows Phone/i.test(ua)) {
 				//cheap af
 				//Chrome mobile introduced a limitation somewhere around version 65, we have to limit XHR upload size to 4 megabytes
-				settings.xhr_ul_blob_megabytes = 4;
+				settings.xhr_ul_blob_megabytes = 10;
 			}
 			if (/^((?!chrome|android|crios|fxios).)*safari/i.test(ua)) {
 				//Safari also needs the IE11 workaround but only for the MPOT version
