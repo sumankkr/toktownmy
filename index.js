@@ -11,11 +11,11 @@ let cache;
 
 Server.use(cors());
 
-Server.get('back/empty', function (req, res) {
+Server.get('/empty', function (req, res) {
   res.status(200).send('');
 });
 
-Server.post('back/empty', function (req, res) {
+Server.post('/empty', function (req, res) {
     res.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
     res.set("Cache-Control", "post-check=0, pre-check=0");
     res.set("Pragma", "no-cache");
