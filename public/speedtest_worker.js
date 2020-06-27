@@ -38,7 +38,7 @@ function twarn(s) {
 // test settings. can be overridden by sending specific values with the start command
 var settings = {
 	mpot: false, //set to true when in MPOT mode
-	test_order: "IP_D_U", //order in which tests will be performed as a string. D=Download, U=Upload, P=Ping+Jitter, I=IP, _=1 second delay
+	test_order: "D_U_IP", //order in which tests will be performed as a string. D=Download, U=Upload, P=Ping+Jitter, I=IP, _=1 second delay
 	time_ul_max: 15, // max duration of upload test in seconds
 	time_dl_max: 15, // max duration of download test in seconds
 	time_auto: true, // if set to true, tests will take less time on faster connections
@@ -46,7 +46,7 @@ var settings = {
 	time_dlGraceTime: 1.5, //time to wait in seconds before actually measuring dl speed (wait for TCP window to increase)
 	count_ping: 10, // number of pings to perform in ping test
 	url_dl: "garbage", // path to a large file or garbage.php, used for download test. must be relative to this js file
-	url_ul: "empty", // path to an empty file, used for upload test. must be relative to this js file
+	url_ul: "backend/empty", // path to an empty file, used for upload test. must be relative to this js file
 	url_ping: "empty", // path to an empty file, used for ping test. must be relative to this js file
 	url_getIp: "getIP", // path to getIP.php relative to this js file, or a similar thing that outputs the client's ip
 	getIp_ispInfo: true, //if set to true, the server will include ISP info with the IP address
