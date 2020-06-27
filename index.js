@@ -11,7 +11,7 @@ let cache;
 
 Server.use(cors());
 
-Server.get('/empty', function (req, res) {
+Server.get('back/empty', function (req, res) {
   res.status(200).send('');
 });
 
