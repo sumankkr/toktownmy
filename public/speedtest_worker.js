@@ -7,11 +7,11 @@
 
 // data reported to main thread
 var testState = -1; // -1=not started, 0=starting, 1=download test, 2=ping+jitter test, 3=upload test, 4=finished, 5=abort
-var dlStatus = ""; // download speed in megabit/s with 2 decimal digits
-var ulStatus = ""; // upload speed in megabit/s with 2 decimal digits
+var dlStatus = ""; // download speed in Mbit/s with 2 decimal digits
+var ulStatus = ""; // upload speed in Mbit/s with 2 decimal digits
 var pingStatus = ""; // ping in milliseconds with 2 decimal digits
 var jitterStatus = ""; // jitter in milliseconds with 2 decimal digits
-var clientIp = ""; // client's IP address as reported by getIP.php
+var clientIp = ""; // client's IP address as reported by getIP
 var dlProgress = 0; //progress of download test 0-1
 var ulProgress = 0; //progress of upload test 0-1
 var pingProgress = 0; //progress of ping+jitter test 0-1
@@ -38,17 +38,17 @@ function twarn(s) {
 // test settings. can be overridden by sending specific values with the start command
 var settings = {
 	mpot: false, //set to true when in MPOT mode
-	test_order: "D_U_IP", //order in which tests will be performed as a string. D=Download, U=Upload, P=Ping+Jitter, I=IP, _=1 second delay
+	test_order: "IP_D_U", //order in which tests will be performed as a string. D=Download, U=Upload, P=Ping+Jitter, I=IP, _=1 second delay
 	time_ul_max: 15, // max duration of upload test in seconds
 	time_dl_max: 15, // max duration of download test in seconds
 	time_auto: true, // if set to true, tests will take less time on faster connections
 	time_ulGraceTime: 3, //time to wait in seconds before actually measuring ul speed (wait for buffers to fill)
 	time_dlGraceTime: 1.5, //time to wait in seconds before actually measuring dl speed (wait for TCP window to increase)
 	count_ping: 10, // number of pings to perform in ping test
-	url_dl: "garbage", // path to a large file or garbage.php, used for download test. must be relative to this js file
-	url_ul: "empty", // path to an empty file, used for upload test. must be relative to this js file
-	url_ping: "empty", // path to an empty file, used for ping test. must be relative to this js file
-	url_getIp: "getIP", // path to getIP.php relative to this js file, or a similar thing that outputs the client's ip
+	url_dl: "backend/garbage", // path to a large file or garbage.php, used for download test. must be relative to this js file
+	url_ul: "backend/empty", // path to an empty file, used for upload test. must be relative to this js file
+	url_ping: "backend/empty", // path to an empty file, used for ping test. must be relative to this js file
+	url_getIp: "backend/getIP", // path to getIP.php relative to this js file, or a similar thing that outputs the client's ip
 	getIp_ispInfo: true, //if set to true, the server will include ISP info with the IP address
 	getIp_ispInfo_distance: "km", //km or mi=estimate distance from server in km/mi; set to false to disable distance estimation. getIp_ispInfo must be enabled in order for this to work
 	xhr_dlMultistream: 6, // number of download streams to use (can be different if enable_quirks is active)
@@ -61,9 +61,9 @@ var settings = {
 	enable_quirks: true, // enable quirks for specific browsers. currently it overrides settings to optimize for specific browsers, unless they are already being overridden with the start command
 	ping_allowPerformanceApi: true, // if enabled, the ping test will attempt to calculate the ping more precisely using the Performance API. Currently works perfectly in Chrome, badly in Edge, and not at all in Firefox. If Performance API is not supported or the result is obviously wrong, a fallback is provided.
 	overheadCompensationFactor: 1.06, //can be changed to compensatie for transport overhead. (see doc.md for some other values)
-	useMebibits: false, //if set to true, speed will be reported in mebibits/s instead of megabits/s
+	useMebibits: false, //if set to true, speed will be reported in Mibit/s instead of Mbit/s
 	telemetry_level: 0, // 0=disabled, 1=basic (results only), 2=full (results and timing) 3=debug (results+log)
-	//url_telemetry: "results/telemetry.php", // path to the script that adds telemetry data to the database
+	url_telemetry: "results/telemetry", // path to the script that adds telemetry data to the database
 	telemetry_extra: "" //extra data that can be passed to the telemetry through the settings
 };
 
@@ -140,7 +140,7 @@ this.addEventListener("message", function(e) {
 				if (/Chrome.(\d+)/i.test(ua) && !!self.fetch) {
 					if (typeof s.xhr_dlMultistream === "undefined") {
 						// chrome more precise with 5 streams
-						settings.xhr_dlMultistream = 10;
+						settings.xhr_dlMultistream = 5;
 					}
 				}
 			}
@@ -155,7 +155,7 @@ this.addEventListener("message", function(e) {
 			if (/Chrome.(\d+)/i.test(ua) && /Android|iPhone|iPad|iPod|Windows Phone/i.test(ua)) {
 				//cheap af
 				//Chrome mobile introduced a limitation somewhere around version 65, we have to limit XHR upload size to 4 megabytes
-				settings.xhr_ul_blob_megabytes = 10;
+				settings.xhr_ul_blob_megabytes = 4;
 			}
 			if (/^((?!chrome|android|crios|fxios).)*safari/i.test(ua)) {
 				//Safari also needs the IE11 workaround but only for the MPOT version
@@ -523,7 +523,7 @@ function ulTest(done) {
 						xhr[i].send(req);
 					}
 				}.bind(this),
-				1
+				delay
 			);
 		}.bind(this);
 		// open streams
