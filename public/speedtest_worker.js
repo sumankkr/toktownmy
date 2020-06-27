@@ -62,9 +62,9 @@ var settings = {
 	ping_allowPerformanceApi: true, // if enabled, the ping test will attempt to calculate the ping more precisely using the Performance API. Currently works perfectly in Chrome, badly in Edge, and not at all in Firefox. If Performance API is not supported or the result is obviously wrong, a fallback is provided.
 	overheadCompensationFactor: 1.06, //can be changed to compensatie for transport overhead. (see doc.md for some other values)
 	useMebibits: false, //if set to true, speed will be reported in Mibit/s instead of Mbit/s
-	telemetry_level: 0, // 0=disabled, 1=basic (results only), 2=full (results and timing) 3=debug (results+log)
-	url_telemetry: "results/telemetry", // path to the script that adds telemetry data to the database
-	telemetry_extra: "" //extra data that can be passed to the telemetry through the settings
+	//telemetry_level: 0, // 0=disabled, 1=basic (results only), 2=full (results and timing) 3=debug (results+log)
+	//url_telemetry: "results/telemetry", // path to the script that adds telemetry data to the database
+	//telemetry_extra: "" //extra data that can be passed to the telemetry through the settings
 };
 
 var xhr = null; // array of currently active xhr requests
