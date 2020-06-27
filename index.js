@@ -74,7 +74,7 @@ Server.get('/getIP', function (req, res) {
 
 Server.use(express.static(path.join(__dirname, 'public')));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 Server.listen(PORT, () => {
-    console.log('running on port 3000');
+    console.log('running on port 8080');
 });
