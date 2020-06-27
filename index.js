@@ -11,7 +11,7 @@ let cache;
 
 Server.use(cors());
 
-Server.get('/empty', function (req, res) {
+Server.get('backend/empty', function (req, res) {
   res.status(200).send();
 });
 
@@ -22,7 +22,7 @@ Server.post('backend/empty', function (req, res) {
     res.status(200).send();
 });
 
-Server.get('/garbage', function (req, res) {
+Server.get('backend/garbage', function (req, res) {
     res.set('Content-Description', 'File Transfer');
     res.set('Content-Type', 'application/octet-stream');
     res.set('Content-Disposition', 'attachment; filename=random.dat');
@@ -49,7 +49,7 @@ Server.get('/garbage', function (req, res) {
 
 });
 
-Server.get('/getIP', function (req, res) {
+Server.get('backend/getIP', function (req, res) {
     let requestIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.headers['HTTP_CLIENT_IP'] || req.headers['X-Real-IP'] || req.headers['HTTP_X_FORWARDED_FOR'];
     if (requestIP.substr(0, 7) === "::ffff:") {
         requestIP = requestIP.substr(7)
