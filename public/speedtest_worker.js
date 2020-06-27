@@ -46,7 +46,7 @@ var settings = {
 	time_dlGraceTime: 1.5, //time to wait in seconds before actually measuring dl speed (wait for TCP window to increase)
 	count_ping: 10, // number of pings to perform in ping test
 	url_dl: "garbage", // path to a large file or garbage.php, used for download test. must be relative to this js file
-	url_ul: "backend/empty", // path to an empty file, used for upload test. must be relative to this js file
+	url_ul: "empty", // path to an empty file, used for upload test. must be relative to this js file
 	url_ping: "empty", // path to an empty file, used for ping test. must be relative to this js file
 	url_getIp: "getIP", // path to getIP.php relative to this js file, or a similar thing that outputs the client's ip
 	getIp_ispInfo: true, //if set to true, the server will include ISP info with the IP address
