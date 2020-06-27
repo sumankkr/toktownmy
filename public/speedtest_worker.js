@@ -515,20 +515,13 @@ function ulTest(done) {
 							if (settings.xhr_ignoreErrors === 1) testStream(i, 0); //restart stream
 						}.bind(this);
 						// send xhr
-						req.setRequestHeader( "HTTP/1.1 200 OK" );
+						
 						xhr[i].open("POST", settings.url_ul + url_sep(settings.url_ul) + (settings.mpot ? "cors=true&" : "") + "r=" + Math.random(), true); // random string to prevent caching
 						try {
-							xhr[i].setRequestHeader( "HTTP/1.1 200 OK" );
-							xhr[i].setRequestHeader("Access-Control-Allow-Origin", "*"); 
-							xhr[i].setRequestHeader("Access-Control-Allow-Origin", "*"); 
-							xhr[i].setRequestHeader("Access-Control-Allow-Methods", "GET, POST");
 							xhr[i].setRequestHeader("Content-Encoding", "Content-Type");// disable compression (some browsers may refuse it, but data is incompressible anyway)
 						} catch (e) {}
 						//No Content-Type header in MPOT branch because it triggers bugs in some browsers
-						req.setRequestHeader("Cache-Control: no-store, no-cache, must-revalidate, max-age=0, s-maxage=0");
-						req.setRequestHeader("Cache-Control: post-check=0, pre-check=0", false);
-						req.setRequestHeader("Pragma: no-cache");
-						req.setRequestHeader("Connection: keep-alive");
+					
 						xhr[i].send(req);
 					}
 				}.bind(this),
